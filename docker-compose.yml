@@ -1,0 +1,40 @@
+postgres:
+  restart: always
+  image: postgres:latest
+  labels:
+    io.rancher.sidekicks: data
+  volumes_from:
+    - data
+
+data:
+  labels:
+    io.rancher.container.start_once: true
+  image: postgres:latest
+  volumes:
+    - /var/lib/postgresql
+  entrypoint: /bin/true
+
+web:
+  image: 192.168.99.1:5000/flaskapp_web:${FLASK_VERSION}
+  links:
+    - postgres:postgres
+  volumes:
+    - /usr/src/app/static
+  environment:
+    DEBUG: 'False'
+    SECRET_KEY : 5(15ds+i2+%ik6z&!yer+ga9m=e%jcqiz_5wszg)r-z!2--b2d
+    DB_NAME : postgres
+    DB_USER : postgres
+    DB_PASS : postgres
+    DB_SERVICE : postgres
+    DB_PORT : 5432
+  command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+nginx:
+  image: 192.168.99.1:5000/flaskapp_nginx:${FLASK_VERSION}
+  labels:
+    io.rancher.sidekicks: web
+  ports:
+    - "80:80"
+  volumes_from:
+    - web
