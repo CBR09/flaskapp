@@ -1,6 +1,5 @@
 Flask With Compose and Machine - From Localhost to the Cloud
 Featuring:
-dfkjghdfkjghkjdf
  I can't believe that!
 - Docker v1.10.2
 - Docker Compose v1.5.0
