@@ -35,6 +35,6 @@ nginx:
   labels:
     io.rancher.sidekicks: web
   ports:
-    - "80:80"
+    - "31003:80"
   volumes_from:
     - web
