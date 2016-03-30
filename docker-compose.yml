@@ -15,7 +15,7 @@ data:
   entrypoint: /bin/true
 
 web:
-  image: 192.168.99.1:5000/flaskapp_web:${FLASK_VERSION}
+  image: 10.40.31.143:5000/product1/flaskapp_web:${FLASK_VERSION}
   links:
     - postgres:postgres
   volumes:
@@ -31,10 +31,10 @@ web:
   command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
 nginx:
-  image: 192.168.99.1:5000/flaskapp_nginx:${FLASK_VERSION}
+  image: 10.40.31.143:5000/product1/flaskapp_nginx:${FLASK_VERSION}
   labels:
     io.rancher.sidekicks: web
   ports:
-    - "80:80"
+    - "31003:80"
   volumes_from:
     - web
